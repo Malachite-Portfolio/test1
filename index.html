@@ -437,18 +437,24 @@ async function submit() {
   const btn = document.querySelector('.btn-submit');
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> Sending...'; }
 
-  // Send to Google Sheets + WhatsApp (non-blocking — redirect even if it fails)
+  // Send to Google Sheets — GET request via script tag (bypasses CORS 100%)
   try {
     if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEBHOOK_URL') {
-      await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        mode: 'no-cors'   // Google Apps Script requires no-cors
+      const encoded = encodeURIComponent(JSON.stringify(payload));
+      const url = WEBHOOK_URL + '?payload=' + encoded;
+
+      await new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = url + '&callback=leadCallback';
+        script.onerror = resolve;
+        script.onload = resolve;
+        window.leadCallback = resolve;
+        document.body.appendChild(script);
+        // Fallback — redirect after 1.5s no matter what
+        setTimeout(resolve, 1500);
       });
     }
   } catch(err) {
-    // Silently fail — don't block the user experience
     console.warn('Webhook error:', err);
   }
 
