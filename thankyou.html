@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — Malachite Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:#07111f;
+  color:#dde2ee;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* ── Background ── */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(32,196,141,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(32,196,141,.035) 1px,transparent 1px);
+  background-size:44px 44px;
+  pointer-events:none;
+}
+.glow-top{
+  position:fixed;top:-120px;left:50%;transform:translateX(-50%);
+  width:700px;height:400px;
+  background:radial-gradient(ellipse,rgba(32,196,141,.13) 0%,transparent 68%);
+  z-index:0;pointer-events:none;
+}
+.glow-bot{
+  position:fixed;bottom:-160px;right:-80px;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse,rgba(32,196,141,.07) 0%,transparent 68%);
+  z-index:0;pointer-events:none;
+}
+
+/* ── Wrapper ── */
+.wrap{
+  position:relative;z-index:1;
+  width:100%;max-width:560px;
+  padding:48px 20px 72px;
+  display:flex;flex-direction:column;align-items:center;
+  gap:0;
+}
+
+/* ── Nav Logo ── */
+.nav-logo{
+  width:100%;display:flex;justify-content:center;
+  margin-bottom:48px;
+  font-family:'Syne',sans-serif;font-size:17px;font-weight:800;
+  color:#fff;letter-spacing:-.01em;
+}
+.nav-logo span{color:#20c48d;}
+.nav-logo .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#20c48d;
+  display:inline-block;margin-left:3px;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+
+/* ── Confetti ring ── */
+.ring-wrap{
+  position:relative;width:96px;height:96px;
+  margin-bottom:28px;
+}
+.ring-wrap svg.ring{
+  position:absolute;inset:0;width:100%;height:100%;
+  animation:spinRing 12s linear infinite;
+}
+@keyframes spinRing{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.ring-inner{
+  position:absolute;inset:10px;
+  background:rgba(32,196,141,.12);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;color:#20c48d;
+  animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+
+/* ── Main card ── */
+.card{
+  background:rgba(255,255,255,.03);
+  border:0.5px solid rgba(255,255,255,.09);
+  border-radius:20px;
+  padding:32px 28px;
+  width:100%;
+  animation:fadeUp .55s .1s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(32,196,141,.09);
+  border:0.5px solid rgba(32,196,141,.28);
+  border-radius:100px;padding:5px 14px;
+  font-size:11px;color:#20c48d;
+  letter-spacing:.07em;text-transform:uppercase;font-weight:500;
+  margin-bottom:16px;
+}
+.main-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,6vw,34px);
+  font-weight:800;line-height:1.1;
+  color:#fff;letter-spacing:-.02em;
+  margin-bottom:10px;
+}
+.main-title span{color:#20c48d}
+.main-sub{
+  font-size:14px;color:rgba(221,226,238,.5);
+  line-height:1.7;font-weight:300;margin-bottom:28px;
+}
+
+/* ── Summary chips ── */
+.summary-section{
+  background:rgba(32,196,141,.05);
+  border:0.5px solid rgba(32,196,141,.15);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:24px;
+}
+.sum-heading{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:#20c48d;font-weight:500;margin-bottom:12px;
+}
+.sum-row{
+  display:flex;gap:8px;align-items:flex-start;
+  font-size:12px;padding:6px 0;
+  border-bottom:0.5px solid rgba(255,255,255,.05);
+}
+.sum-row:last-child{border-bottom:none}
+.sum-key{color:rgba(221,226,238,.4);min-width:88px;flex-shrink:0;font-size:12px}
+.sum-val{color:#dde2ee;font-weight:500;line-height:1.4}
+.no-summary{font-size:13px;color:rgba(221,226,238,.35);text-align:center;padding:8px 0}
+
+/* ── Timeline steps ── */
+.timeline{
+  display:flex;flex-direction:column;gap:0;
+  margin-bottom:24px;
+  border:0.5px solid rgba(255,255,255,.07);
+  border-radius:14px;
+  overflow:hidden;
+}
+.tl-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;
+  border-bottom:0.5px solid rgba(255,255,255,.05);
+  transition:background .2s;
+  position:relative;
+}
+.tl-item:last-child{border-bottom:none}
+.tl-item.done{background:rgba(32,196,141,.04)}
+.tl-item.active{background:rgba(32,196,141,.07)}
+.tl-num{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+}
+.tl-item.done .tl-num{background:rgba(32,196,141,.2);color:#20c48d}
+.tl-item.active .tl-num{background:#20c48d;color:#07111f;box-shadow:0 0 16px rgba(32,196,141,.4)}
+.tl-item.pending .tl-num{background:rgba(255,255,255,.05);color:rgba(221,226,238,.3)}
+.tl-text strong{display:block;font-size:13px;font-weight:500;color:#fff;margin-bottom:2px}
+.tl-item.pending .tl-text strong{color:rgba(221,226,238,.4)}
+.tl-text span{font-size:12px;color:rgba(221,226,238,.38);line-height:1.5}
+.tl-badge{
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:10px;padding:3px 9px;border-radius:100px;font-weight:500;
+}
+.tl-item.done .tl-badge{background:rgba(32,196,141,.1);color:#20c48d}
+.tl-item.active .tl-badge{background:#20c48d;color:#07111f}
+
+/* ── CTA buttons ── */
+.cta-group{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.btn-wa{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  background:#25D366;color:#fff;
+  padding:15px;border-radius:12px;
+  font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all .2s;
+}
+.btn-wa:hover{background:#1fbf5a;transform:translateY(-1px);box-shadow:0 4px 20px rgba(37,211,102,.25)}
+.btn-secondary{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,.04);color:rgba(221,226,238,.7);
+  padding:14px;border-radius:12px;
+  font-size:14px;font-weight:400;font-family:'DM Sans',sans-serif;
+  text-decoration:none;border:0.5px solid rgba(255,255,255,.1);cursor:pointer;
+  transition:all .2s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.07);color:#dde2ee;border-color:rgba(32,196,141,.3)}
+
+/* ── Micro trust ── */
+.micro-trust{
+  display:flex;justify-content:center;gap:18px;flex-wrap:wrap;
+  padding-top:4px;
+}
+.mt-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:11px;color:rgba(221,226,238,.28);
+}
+.mt-item i{color:rgba(32,196,141,.5);font-size:13px}
+
+/* ── Social proof strip ── */
+.proof-strip{
+  width:100%;display:flex;gap:10px;
+  margin-top:24px;
+  animation:fadeUp .6s .3s ease both;
+}
+.proof-card{
+  flex:1;background:rgba(255,255,255,.025);
+  border:0.5px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:14px 12px;
+  text-align:center;
+}
+.proof-n{
+  font-family:'Syne',sans-serif;
+  font-size:20px;font-weight:800;color:#20c48d;line-height:1;
+}
+.proof-l{font-size:10px;color:rgba(221,226,238,.35);margin-top:4px;line-height:1.4}
+
+/* ── Footer ── */
+.footer{
+  position:relative;z-index:1;
+  margin-top:auto;padding:24px 20px;
+  width:100%;max-width:560px;
+  display:flex;justify-content:center;gap:24px;flex-wrap:wrap;
+}
+.footer a{font-size:12px;color:rgba(221,226,238,.25);text-decoration:none;transition:color .2s}
+.footer a:hover{color:rgba(221,226,238,.6)}
+
+/* ── Countdown ── */
+.countdown-box{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:rgba(255,255,255,.025);
+  border:0.5px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:12px 16px;
+  margin-bottom:24px;font-size:13px;color:rgba(221,226,238,.5);
+}
+.countdown-box strong{color:#20c48d;font-weight:600}
+.countdown-box i{color:#20c48d;font-size:16px}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="glow-top"></div>
+<div class="glow-bot"></div>
+
+<div class="wrap">
+
+  <!-- Logo -->
+  <div class="nav-logo">
+    Malachite<span>.</span><span class="dot"></span>
+  </div>
+
+  <!-- Success ring icon -->
+  <div class="ring-wrap" style="animation:fadeUp .5s ease both">
+    <svg class="ring" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="48" cy="48" r="44" stroke="rgba(32,196,141,0.15)" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round"/>
+      <circle cx="48" cy="48" r="44" stroke="rgba(32,196,141,0.35)" stroke-width="1.5" stroke-dasharray="60 220" stroke-linecap="round"/>
+    </svg>
+    <div class="ring-inner">
+      <i class="ti ti-check"></i>
+    </div>
+  </div>
+
+  <!-- Main card -->
+  <div class="card">
+    <div class="badge"><i class="ti ti-sparkles"></i> Submission confirmed</div>
+    <div class="main-title">You're all set,<br><span id="first-name">friend</span>! 🎉</div>
+    <p class="main-sub">We've received your project brief. Our team personally reviews every submission and will reach out within 2 hours with a custom quote.</p>
+
+    <!-- Project summary -->
+    <div class="summary-section">
+      <div class="sum-heading"><i class="ti ti-clipboard-list"></i> &nbsp;Your project brief</div>
+      <div id="summary-rows">
+        <div class="no-summary">Your selections will appear here</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="countdown-box">
+      <i class="ti ti-clock"></i>
+      Expected reply in <strong id="countdown">2:00:00</strong> &nbsp;·&nbsp; Mon–Sat, 9am–8pm IST
+    </div>
+
+    <!-- What happens next -->
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-num"><i class="ti ti-check" style="font-size:14px"></i></div>
+        <div class="tl-text">
+          <strong>Brief submitted</strong>
+          <span>Your project details are safely with us</span>
+        </div>
+        <span class="tl-badge">Done ✓</span>
+      </div>
+      <div class="tl-item active">
+        <div class="tl-num">2</div>
+        <div class="tl-text">
+          <strong>Team reviews your brief</strong>
+          <span>We study your requirements and prepare a tailored quote</span>
+        </div>
+        <span class="tl-badge">In progress</span>
+      </div>
+      <div class="tl-item pending">
+        <div class="tl-num">3</div>
+        <div class="tl-text">
+          <strong>Custom quote sent to you</strong>
+          <span>Detailed breakdown of scope, timeline & cost — within 2 hrs</span>
+        </div>
+      </div>
+      <div class="tl-item pending">
+        <div class="tl-num">4</div>
+        <div class="tl-text">
+          <strong>Free 30-min strategy call</strong>
+          <span>Align on goals, ask questions, confirm direction</span>
+        </div>
+      </div>
+      <div class="tl-item pending">
+        <div class="tl-num">5</div>
+        <div class="tl-text">
+          <strong>Project kickoff 🚀</strong>
+          <span>Once approved, your build begins</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="cta-group">
+      <a class="btn-wa" id="wa-link" href="https://wa.me/911204030919?text=Hi%2C%20I%20just%20submitted%20my%20web%20development%20brief%20on%20your%20website." target="_blank">
+        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Also ping us on WhatsApp
+      </a>
+      <a class="btn-secondary" href="https://malachitetechnologies.com/home.html">
+        <i class="ti ti-arrow-left"></i>
+        Back to homepage
+      </a>
+    </div>
+
+    <!-- Micro trust -->
+    <div class="micro-trust">
+      <span class="mt-item"><i class="ti ti-lock"></i> 100% confidential</span>
+      <span class="mt-item"><i class="ti ti-ban"></i> Zero spam</span>
+      <span class="mt-item"><i class="ti ti-phone-off"></i> No pushy sales</span>
+      <span class="mt-item"><i class="ti ti-shield-check"></i> NDA available</span>
+    </div>
+  </div>
+
+  <!-- Social proof strip -->
+  <div class="proof-strip">
+    <div class="proof-card">
+      <div class="proof-n">50+</div>
+      <div class="proof-l">Projects delivered</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-n">5+</div>
+      <div class="proof-l">Years experience</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-n">4.9★</div>
+      <div class="proof-l">Client rating</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-n">2hr</div>
+      <div class="proof-l">Avg. response</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <a href="https://malachitetechnologies.com/privacy-policy.html">Privacy Policy</a>
+  <a href="https://malachitetechnologies.com/terms-conditions.html">Terms</a>
+  <a href="mailto:support@malachitetechnologies.com">support@malachitetechnologies.com</a>
+  <a href="tel:+911204030919">+91 120 4030 919</a>
+</footer>
+
+<script>
+// ── Read data passed from the landing page ──────────────────────────
+const LABEL_MAP = {
+  // purpose
+  ecom:'E-Commerce Store', realestate:'Real Estate', business:'Business / Corporate',
+  portfolio:'Portfolio / Personal', saas:'SaaS / Web App', blog:'Blog / Content',
+  // platform
+  shopify:'Shopify', wordpress:'WordPress / WooCommerce', wix:'Wix',
+  webflow:'Webflow', custom:'Custom Code',
+  // tech
+  react:'React / Next.js', node:'Node.js', fullstack:'Full Stack',
+  html:'HTML / CSS / JS', python:'Python / Django', rn:'React Native',
+  // features
+  pay:'Payment Gateway', admin:'Admin Panel', seo:'SEO Setup', bot:'AI Chatbot',
+  lang:'Multi-Language', analytics:'Analytics', crm:'CRM / Lead Forms',
+  maps:'Maps Integration', nl:'Newsletter', contact:'Contact Form', blog_f:'Blog Section',
+  // budget
+  'u15':'Under ₹15,000', '15-40':'₹15,000 – ₹40,000',
+  '40-1l':'₹40,000 – ₹1 Lakh', '1l+':'₹1 Lakh+',
+  // timeline
+  asap:'ASAP (1–2 weeks)', '1mo':'Within 1 month',
+  '3mo':'1–3 months', flex:'Flexible'
+};
+const STEP_NAMES = {
+  purpose:'Website type', platform:'Platform', tech:'Tech stack',
+  features:'Key features', budget:'Budget', timeline:'Timeline'
+};
+
+function label(v){ return LABEL_MAP[v] || v; }
+
+// Try to read from sessionStorage (set by landing page on submit)
+let data = {};
+try {
+  const raw = sessionStorage.getItem('malachite_lead');
+  if (raw) data = JSON.parse(raw);
+} catch(e){}
+
+// Personalise greeting
+const firstName = (data.name || '').split(' ')[0] || 'friend';
+document.getElementById('first-name').textContent = firstName;
+
+// Build WhatsApp link with context
+if (data.name || data.phone) {
+  const msg = encodeURIComponent(
+    `Hi, I'm ${data.name || 'a potential client'}. I just submitted a web development brief on your website.`
+    + (data.purpose ? ` I need a ${label(data.purpose[0])}` : '')
+    + (data.budget ? ` with a budget of ${label(data.budget[0])}` : '')
+    + `. Looking forward to hearing from you!`
+  );
+  document.getElementById('wa-link').href = `https://wa.me/911204030919?text=${msg}`;
+}
+
+// Render summary rows
+const summaryEl = document.getElementById('summary-rows');
+const showSteps = ['purpose','platform','tech','features','budget','timeline'];
+let rows = '';
+showSteps.forEach(s => {
+  if (!data[s] || !data[s].length) return;
+  const vals = data[s].map(v => label(v)).join(', ');
+  rows += `<div class="sum-row">
+    <span class="sum-key">${STEP_NAMES[s]||s}</span>
+    <span class="sum-val">${vals}</span>
+  </div>`;
+});
+if (data.name) rows += `<div class="sum-row"><span class="sum-key">Contact</span><span class="sum-val">${data.name}${data.phone ? ' · ' + data.phone : ''}${data.email ? ' · ' + data.email : ''}</span></div>`;
+summaryEl.innerHTML = rows || '<div class="no-summary">No brief data found — please resubmit if needed.</div>';
+
+// ── 2-hour countdown ────────────────────────────────────────────────
+const TWO_HRS = 2 * 60 * 60 * 1000;
+let endTime;
+try {
+  const stored = sessionStorage.getItem('malachite_timer_end');
+  endTime = stored ? parseInt(stored) : Date.now() + TWO_HRS;
+  if (!stored) sessionStorage.setItem('malachite_timer_end', endTime);
+} catch(e){ endTime = Date.now() + TWO_HRS; }
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function tick(){
+  const now = Date.now();
+  const left = Math.max(0, endTime - now);
+  const h = Math.floor(left / 3600000);
+  const m = Math.floor((left % 3600000) / 60000);
+  const s = Math.floor((left % 60000) / 1000);
+  document.getElementById('countdown').textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+  if (left > 0) setTimeout(tick, 1000);
+  else document.getElementById('countdown').textContent = 'any moment now';
+}
+tick();
+</script>
+</body>
+</html>

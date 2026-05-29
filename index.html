@@ -1,714 +1,478 @@
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  .lp-wrap {
-    font-family: 'DM Sans', sans-serif;
-    background: #0a0f1e;
-    min-height: 100vh;
-    color: #e8eaf0;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .lp-bg-grid {
-    position: absolute; inset: 0; z-index: 0;
-    background-image:
-      linear-gradient(rgba(32,196,141,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(32,196,141,0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-
-  .lp-bg-glow {
-    position: absolute; top: -120px; left: 50%; transform: translateX(-50%);
-    width: 700px; height: 400px; z-index: 0;
-    background: radial-gradient(ellipse at center, rgba(32,196,141,0.13) 0%, transparent 70%);
-  }
-
-  .lp-hero {
-    position: relative; z-index: 1;
-    text-align: center;
-    padding: 48px 24px 32px;
-  }
-
-  .lp-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(32,196,141,0.1);
-    border: 0.5px solid rgba(32,196,141,0.3);
-    border-radius: 100px;
-    padding: 5px 14px;
-    font-size: 12px;
-    color: #20c48d;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-bottom: 20px;
-  }
-
-  .lp-h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(28px, 5vw, 44px);
-    font-weight: 800;
-    line-height: 1.12;
-    color: #fff;
-    margin-bottom: 14px;
-    letter-spacing: -0.02em;
-  }
-
-  .lp-h1 span { color: #20c48d; }
-
-  .lp-sub {
-    font-size: 15px;
-    color: rgba(232,234,240,0.55);
-    max-width: 460px;
-    margin: 0 auto 36px;
-    line-height: 1.65;
-    font-weight: 300;
-  }
-
-  .lp-form-shell {
-    position: relative; z-index: 1;
-    max-width: 640px; margin: 0 auto;
-    padding: 0 16px 64px;
-  }
-
-  .lp-card {
-    background: rgba(255,255,255,0.035);
-    border: 0.5px solid rgba(255,255,255,0.1);
-    border-radius: 20px;
-    padding: 32px 28px;
-    backdrop-filter: blur(8px);
-  }
-
-  .step-header {
-    margin-bottom: 24px;
-  }
-
-  .step-label {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #20c48d;
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-
-  .step-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.3;
-  }
-
-  .step-sub {
-    font-size: 13px;
-    color: rgba(232,234,240,0.45);
-    margin-top: 4px;
-  }
-
-  .options-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-
-  .options-grid.three { grid-template-columns: repeat(3,1fr); }
-  .options-grid.one { grid-template-columns: 1fr; }
-
-  .opt-btn {
-    background: rgba(255,255,255,0.04);
-    border: 0.5px solid rgba(255,255,255,0.12);
-    border-radius: 12px;
-    padding: 14px 12px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.18s ease;
-    display: flex; flex-direction: column; gap: 4px;
-    color: #e8eaf0;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .opt-btn:hover {
-    background: rgba(32,196,141,0.08);
-    border-color: rgba(32,196,141,0.35);
-  }
-
-  .opt-btn.selected {
-    background: rgba(32,196,141,0.13);
-    border-color: #20c48d;
-  }
-
-  .opt-icon {
-    font-size: 20px;
-    margin-bottom: 2px;
-    color: #20c48d;
-  }
-
-  .opt-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #fff;
-  }
-
-  .opt-desc {
-    font-size: 11px;
-    color: rgba(232,234,240,0.45);
-    line-height: 1.4;
-  }
-
-  .progress-bar {
-    height: 3px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 100px;
-    margin-bottom: 28px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%; background: #20c48d;
-    border-radius: 100px;
-    transition: width 0.4s ease;
-  }
-
-  .btn-next {
-    width: 100%;
-    background: #20c48d;
-    border: none;
-    border-radius: 12px;
-    padding: 15px 24px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #0a0f1e;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    transition: opacity 0.18s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-
-  .btn-next:hover { opacity: 0.88; }
-  .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  .btn-back {
-    background: none; border: none;
-    color: rgba(232,234,240,0.45);
-    font-size: 13px; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    padding: 0; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 4px;
-    transition: color 0.18s;
-  }
-  .btn-back:hover { color: #e8eaf0; }
-
-  .form-input {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 0.5px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 13px 16px;
-    font-size: 14px;
-    color: #e8eaf0;
-    font-family: 'DM Sans', sans-serif;
-    margin-bottom: 12px;
-    outline: none;
-    transition: border-color 0.18s;
-  }
-  .form-input::placeholder { color: rgba(232,234,240,0.3); }
-  .form-input:focus { border-color: #20c48d; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  .summary-chip {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(32,196,141,0.1);
-    border: 0.5px solid rgba(32,196,141,0.25);
-    border-radius: 100px;
-    padding: 4px 12px;
-    font-size: 12px;
-    color: #20c48d;
-    margin: 3px;
-    font-weight: 500;
-  }
-
-  .summary-box {
-    background: rgba(255,255,255,0.03);
-    border: 0.5px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-  }
-
-  .summary-row {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 13px; color: rgba(232,234,240,0.6);
-    padding: 6px 0;
-    border-bottom: 0.5px solid rgba(255,255,255,0.05);
-  }
-  .summary-row:last-child { border-bottom: none; }
-  .summary-row strong { color: #e8eaf0; min-width: 100px; font-weight: 500; }
-
-  .success-icon {
-    width: 60px; height: 60px;
-    background: rgba(32,196,141,0.15);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 26px;
-    color: #20c48d;
-  }
-
-  .trust-row {
-    display: flex; align-items: center; justify-content: center;
-    gap: 20px; flex-wrap: wrap;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 0.5px solid rgba(255,255,255,0.06);
-  }
-
-  .trust-item {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px;
-    color: rgba(232,234,240,0.4);
-  }
-
-  .trust-item i { color: #20c48d; font-size: 14px; }
-
-  .step-view { display: none; }
-  .step-view.active { display: block; }
-
-  .budget-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
-
-  .timeline-tag {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 100px;
-    background: rgba(32,196,141,0.1);
-    color: #20c48d;
-    margin-top: 2px;
-    display: inline-block;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+.w{font-family:'DM Sans',sans-serif;background:#07111f;color:#dde2ee;position:relative;overflow:hidden}
+.bg-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(32,196,141,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(32,196,141,.035) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:320px;background:radial-gradient(ellipse,rgba(32,196,141,.11) 0%,transparent 70%);z-index:0;pointer-events:none}
+.hero{position:relative;z-index:1;text-align:center;padding:44px 20px 28px}
+.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(32,196,141,.09);border:0.5px solid rgba(32,196,141,.3);border-radius:100px;padding:5px 14px;font-size:11px;color:#20c48d;letter-spacing:.07em;text-transform:uppercase;font-weight:500;margin-bottom:18px}
+.h1{font-family:'Syne',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:800;line-height:1.1;color:#fff;margin-bottom:12px;letter-spacing:-.02em}
+.h1 span{color:#20c48d}
+.hero-sub{font-size:14px;color:rgba(221,226,238,.5);max-width:400px;margin:0 auto;line-height:1.7;font-weight:300}
+.fw{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:0 16px 56px}
+.pbar{height:2px;background:rgba(255,255,255,.06);border-radius:100px;margin-bottom:24px;overflow:hidden}
+.pfill{height:100%;background:#20c48d;border-radius:100px;transition:width .4s ease}
+.card{background:rgba(255,255,255,.03);border:0.5px solid rgba(255,255,255,.09);border-radius:18px;padding:28px 24px}
+.slabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#20c48d;font-weight:500;margin-bottom:5px}
+.stitle{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:#fff;line-height:1.3}
+.ssub{font-size:12px;color:rgba(221,226,238,.4);margin-top:3px;display:flex;align-items:center;gap:5px}
+.multi-badge{background:rgba(32,196,141,.1);border:0.5px solid rgba(32,196,141,.25);border-radius:100px;padding:2px 8px;font-size:10px;color:#20c48d;font-weight:500}
+.sh{margin-bottom:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+.opt{background:rgba(255,255,255,.03);border:0.5px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 11px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:3px;color:#dde2ee;font-family:'DM Sans',sans-serif;transition:all .15s ease;position:relative}
+.opt:hover{background:rgba(32,196,141,.07);border-color:rgba(32,196,141,.3)}
+.opt.sel{background:rgba(32,196,141,.12);border-color:#20c48d}
+.opt.sel .oi{color:#20c48d}
+.oi{font-size:18px;color:rgba(32,196,141,.7);margin-bottom:1px}
+.ol{font-size:13px;font-weight:500;color:#fff}
+.od{font-size:11px;color:rgba(221,226,238,.4);line-height:1.35}
+.otag{font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(32,196,141,.1);color:#20c48d;margin-top:2px;display:inline-block;font-weight:500}
+.check{position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:0.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center}
+.opt.sel .check{background:#20c48d;border-color:#20c48d}
+.opt.sel .check:after{content:'✓';font-size:9px;color:#07111f;font-weight:700}
+.btn-next{width:100%;background:#20c48d;border:none;border-radius:11px;padding:14px;font-size:14px;font-weight:500;color:#07111f;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-next:hover{opacity:.87}
+.btn-next:disabled{opacity:.28;cursor:not-allowed}
+.btn-back{background:none;border:none;color:rgba(221,226,238,.38);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0;margin-bottom:14px;display:flex;align-items:center;gap:4px;transition:color .15s}
+.btn-back:hover{color:#dde2ee}
+.skip-link{text-align:center;margin-top:10px}
+.skip-link button{background:none;border:none;color:rgba(221,226,238,.3);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:color .15s}
+.skip-link button:hover{color:rgba(221,226,238,.6)}
+.inp{width:100%;background:rgba(255,255,255,.04);border:0.5px solid rgba(255,255,255,.1);border-radius:9px;padding:12px 14px;font-size:13px;color:#dde2ee;font-family:'DM Sans',sans-serif;margin-bottom:10px;outline:none;transition:border-color .15s}
+.inp::placeholder{color:rgba(221,226,238,.25)}
+.inp:focus{border-color:rgba(32,196,141,.5)}
+.irow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sum-box{background:rgba(255,255,255,.025);border:0.5px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;margin-bottom:16px}
+.sum-row{display:flex;gap:8px;font-size:12px;color:rgba(221,226,238,.5);padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,.04)}
+.sum-row:last-child{border-bottom:none}
+.sum-row strong{color:#dde2ee;min-width:90px;font-weight:500;font-size:12px}
+.cta-wrap{background:rgba(32,196,141,.06);border:0.5px solid rgba(32,196,141,.18);border-radius:14px;padding:20px;margin-bottom:16px;text-align:center}
+.cta-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.cta-sub{font-size:12px;color:rgba(221,226,238,.45);margin-bottom:16px}
+.btn-submit{width:100%;background:linear-gradient(135deg,#20c48d,#17a876);border:none;border-radius:12px;padding:17px;font-size:15px;font-weight:500;color:#07111f;cursor:pointer;font-family:'Syne',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.01em;transition:opacity .15s}
+.btn-submit:hover{opacity:.9}
+.micro-trust{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:12px}
+.mt-item{display:flex;align-items:center;gap:4px;font-size:11px;color:rgba(221,226,238,.3)}
+.mt-item i{color:rgba(32,196,141,.6);font-size:12px}
+.suc-icon{width:52px;height:52px;background:rgba(32,196,141,.12);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px;color:#20c48d}
+.below{position:relative;z-index:1;max-width:600px;margin:0 auto;padding:0 16px 56px}
+.divider{height:0.5px;background:rgba(255,255,255,.06);margin-bottom:36px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:36px}
+.stat-card{background:rgba(255,255,255,.025);border:0.5px solid rgba(255,255,255,.07);border-radius:12px;padding:14px 10px;text-align:center}
+.stat-n{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#20c48d;line-height:1}
+.stat-l{font-size:11px;color:rgba(221,226,238,.38);margin-top:4px;line-height:1.4}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
+.tcard{background:rgba(255,255,255,.025);border:0.5px solid rgba(255,255,255,.07);border-radius:12px;padding:16px}
+.ttext{font-size:12px;color:rgba(221,226,238,.6);line-height:1.6;margin-bottom:12px;font-style:italic}
+.tname{font-size:12px;font-weight:500;color:#dde2ee}
+.trole{font-size:11px;color:rgba(221,226,238,.35)}
+.stars{color:#20c48d;font-size:12px;margin-bottom:8px;letter-spacing:1px}
+.next-sec{}
+.next-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:14px;text-align:center}
+.next-steps{display:flex;gap:0;position:relative}
+.next-steps:before{content:'';position:absolute;top:20px;left:20px;right:20px;height:0.5px;background:rgba(32,196,141,.15)}
+.nstep{flex:1;text-align:center;position:relative;z-index:1}
+.nnum{width:40px;height:40px;border-radius:50%;background:#07111f;border:0.5px solid rgba(32,196,141,.35);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#20c48d;margin:0 auto 8px}
+.nlabel{font-size:11px;color:rgba(221,226,238,.45);line-height:1.4;padding:0 4px}
 </style>
 
-<div class="lp-wrap">
-  <div class="lp-bg-grid"></div>
-  <div class="lp-bg-glow"></div>
+<div class="w">
+<div class="bg-grid"></div><div class="glow"></div>
 
-  <div class="lp-hero">
-    <div class="lp-badge">
-      <i class="ti ti-sparkles" aria-hidden="true"></i>
-      Free Consultation — 2 hr Response
-    </div>
-    <h1 class="lp-h1">Get Your <span>Custom Website</span><br>Built the Right Way</h1>
-    <p class="lp-sub">Tell us exactly what you need — we'll match you with the right solution, tech stack, and timeline. No fluff.</p>
+<div class="hero">
+  <div class="badge"><i class="ti ti-sparkles" aria-hidden="true"></i> Free — 2 hr response</div>
+  <h1 class="h1">Get Your <span>Custom Website</span><br>Built the Right Way</h1>
+  <p class="hero-sub">A few smart questions → a detailed quote tailored exactly to your project.</p>
+</div>
+
+<div class="fw">
+  <div class="pbar"><div class="pfill" id="prog" style="width:12%"></div></div>
+  <div class="card" id="card"></div>
+</div>
+
+<div class="below" id="below" style="display:none">
+  <div class="divider"></div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-n">50+</div><div class="stat-l">Projects delivered</div></div>
+    <div class="stat-card"><div class="stat-n">5+</div><div class="stat-l">Years in business</div></div>
+    <div class="stat-card"><div class="stat-n">2hr</div><div class="stat-l">Avg. response time</div></div>
+    <div class="stat-card"><div class="stat-n">4.9★</div><div class="stat-l">Client satisfaction</div></div>
   </div>
-
-  <div class="lp-form-shell">
-    <div class="progress-bar"><div class="progress-fill" id="prog" style="width:14%"></div></div>
-
-    <div class="lp-card">
-
-      <!-- STEP 1: Website Purpose -->
-      <div class="step-view active" id="s1">
-        <div class="step-header">
-          <div class="step-label">Step 1 of 7 — Purpose</div>
-          <div class="step-title">What is your website for?</div>
-          <div class="step-sub">Choose the primary goal of your project</div>
-        </div>
-        <div class="options-grid">
-          <button class="opt-btn" data-val="ecommerce" onclick="pick(this,'s1')">
-            <i class="ti ti-shopping-cart opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">E-Commerce Store</span>
-            <span class="opt-desc">Sell products online</span>
-          </button>
-          <button class="opt-btn" data-val="real-estate" onclick="pick(this,'s1')">
-            <i class="ti ti-building-skyscraper opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Real Estate</span>
-            <span class="opt-desc">Property listings & leads</span>
-          </button>
-          <button class="opt-btn" data-val="business" onclick="pick(this,'s1')">
-            <i class="ti ti-briefcase opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Business / Corporate</span>
-            <span class="opt-desc">Company presence & services</span>
-          </button>
-          <button class="opt-btn" data-val="portfolio" onclick="pick(this,'s1')">
-            <i class="ti ti-palette opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Portfolio / Personal</span>
-            <span class="opt-desc">Showcase your work</span>
-          </button>
-          <button class="opt-btn" data-val="saas" onclick="pick(this,'s1')">
-            <i class="ti ti-layout-dashboard opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">SaaS / Web App</span>
-            <span class="opt-desc">Dashboard or platform</span>
-          </button>
-          <button class="opt-btn" data-val="blog" onclick="pick(this,'s1')">
-            <i class="ti ti-article opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Blog / Content</span>
-            <span class="opt-desc">Publishing & media</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n1" disabled onclick="next('s1','s2')">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 2: Platform -->
-      <div class="step-view" id="s2">
-        <button class="btn-back" onclick="back('s2','s1')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 2 of 7 — Platform</div>
-          <div class="step-title">Which platform do you prefer?</div>
-          <div class="step-sub">Don't worry — we can guide you if you're unsure</div>
-        </div>
-        <div class="options-grid" id="platform-opts">
-          <button class="opt-btn" data-val="shopify" onclick="pick(this,'s2')">
-            <i class="ti ti-brand-shopify opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Shopify</span>
-            <span class="opt-desc">Best for e-commerce at scale</span>
-            <span class="timeline-tag">Fastest to launch</span>
-          </button>
-          <button class="opt-btn" data-val="wordpress" onclick="pick(this,'s2')">
-            <i class="ti ti-brand-wordpress opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">WordPress</span>
-            <span class="opt-desc">Flexible CMS with WooCommerce</span>
-            <span class="timeline-tag">Most popular</span>
-          </button>
-          <button class="opt-btn" data-val="wix" onclick="pick(this,'s2')">
-            <i class="ti ti-template opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Wix / Webflow</span>
-            <span class="opt-desc">Visual drag-and-drop builder</span>
-          </button>
-          <button class="opt-btn" data-val="squarespace" onclick="pick(this,'s2')">
-            <i class="ti ti-square opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Squarespace</span>
-            <span class="opt-desc">Design-first websites</span>
-          </button>
-          <button class="opt-btn" data-val="custom" onclick="pick(this,'s2')">
-            <i class="ti ti-code opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Custom Code</span>
-            <span class="opt-desc">Fully bespoke development</span>
-            <span class="timeline-tag">Most powerful</span>
-          </button>
-          <button class="opt-btn" data-val="unsure" onclick="pick(this,'s2')">
-            <i class="ti ti-help-circle opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">I'm not sure</span>
-            <span class="opt-desc">Help me choose the best fit</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n2" disabled onclick="goPlatformNext()">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 3: Tech Stack (only if custom code) -->
-      <div class="step-view" id="s3">
-        <button class="btn-back" onclick="back('s3','s2')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 3 of 7 — Tech Stack</div>
-          <div class="step-title">What kind of code do you need?</div>
-          <div class="step-sub">Select all that apply — we'll recommend the best combination</div>
-        </div>
-        <div class="options-grid">
-          <button class="opt-btn" data-val="react" onclick="toggle(this,'s3')">
-            <i class="ti ti-brand-react opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">React / Next.js</span>
-            <span class="opt-desc">Modern web apps & SPAs</span>
-            <span class="timeline-tag">Recommended</span>
-          </button>
-          <button class="opt-btn" data-val="html-css" onclick="toggle(this,'s3')">
-            <i class="ti ti-brand-html5 opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">HTML / CSS / JS</span>
-            <span class="opt-desc">Static or lightweight sites</span>
-          </button>
-          <button class="opt-btn" data-val="node" onclick="toggle(this,'s3')">
-            <i class="ti ti-server opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Node.js Backend</span>
-            <span class="opt-desc">APIs, servers, databases</span>
-          </button>
-          <button class="opt-btn" data-val="react-native" onclick="toggle(this,'s3')">
-            <i class="ti ti-device-mobile opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">React Native</span>
-            <span class="opt-desc">iOS + Android from one codebase</span>
-          </button>
-          <button class="opt-btn" data-val="python" onclick="toggle(this,'s3')">
-            <i class="ti ti-brand-python opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Python / Django</span>
-            <span class="opt-desc">AI-ready backend</span>
-          </button>
-          <button class="opt-btn" data-val="fullstack" onclick="toggle(this,'s3')">
-            <i class="ti ti-stack opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Full Stack</span>
-            <span class="opt-desc">Front + back + database</span>
-            <span class="timeline-tag">Most complete</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n3" disabled onclick="next('s3','s4')">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 4: Features -->
-      <div class="step-view" id="s4">
-        <button class="btn-back" onclick="backFeatures()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 4 of 7 — Features</div>
-          <div class="step-title">What features do you need?</div>
-          <div class="step-sub">Pick everything that applies to your project</div>
-        </div>
-        <div class="options-grid">
-          <button class="opt-btn" data-val="payment" onclick="toggle(this,'s4')">
-            <i class="ti ti-credit-card opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Payment Gateway</span>
-            <span class="opt-desc">Razorpay, Stripe, PayPal</span>
-          </button>
-          <button class="opt-btn" data-val="admin" onclick="toggle(this,'s4')">
-            <i class="ti ti-settings opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Admin Dashboard</span>
-            <span class="opt-desc">Manage content & users</span>
-          </button>
-          <button class="opt-btn" data-val="seo" onclick="toggle(this,'s4')">
-            <i class="ti ti-search opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">SEO Optimization</span>
-            <span class="opt-desc">Rank on Google</span>
-          </button>
-          <button class="opt-btn" data-val="chatbot" onclick="toggle(this,'s4')">
-            <i class="ti ti-robot opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">AI Chatbot</span>
-            <span class="opt-desc">24/7 customer support bot</span>
-          </button>
-          <button class="opt-btn" data-val="multilang" onclick="toggle(this,'s4')">
-            <i class="ti ti-language opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Multi-Language</span>
-            <span class="opt-desc">Hindi, English + more</span>
-          </button>
-          <button class="opt-btn" data-val="analytics" onclick="toggle(this,'s4')">
-            <i class="ti ti-chart-bar opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Analytics Setup</span>
-            <span class="opt-desc">Track visitors & conversions</span>
-          </button>
-          <button class="opt-btn" data-val="crm" onclick="toggle(this,'s4')">
-            <i class="ti ti-users opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">CRM Integration</span>
-            <span class="opt-desc">Lead & contact management</span>
-          </button>
-          <button class="opt-btn" data-val="blog" onclick="toggle(this,'s4')">
-            <i class="ti ti-pencil opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Blog / CMS</span>
-            <span class="opt-desc">Publish content easily</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n4" disabled onclick="next('s4','s5')">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 5: Budget -->
-      <div class="step-view" id="s5">
-        <button class="btn-back" onclick="back('s5','s4')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 5 of 7 — Budget</div>
-          <div class="step-title">What's your approximate budget?</div>
-          <div class="step-sub">This helps us recommend the right solution</div>
-        </div>
-        <div class="budget-opts">
-          <button class="opt-btn" data-val="under-15k" onclick="pick(this,'s5')">
-            <i class="ti ti-currency-rupee opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Under ₹15,000</span>
-            <span class="opt-desc">Basic landing page or template</span>
-          </button>
-          <button class="opt-btn" data-val="15k-40k" onclick="pick(this,'s5')">
-            <i class="ti ti-currency-rupee opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">₹15k – ₹40k</span>
-            <span class="opt-desc">Professional website</span>
-            <span class="timeline-tag">Most popular</span>
-          </button>
-          <button class="opt-btn" data-val="40k-1l" onclick="pick(this,'s5')">
-            <i class="ti ti-currency-rupee opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">₹40k – ₹1 Lakh</span>
-            <span class="opt-desc">Feature-rich web app</span>
-          </button>
-          <button class="opt-btn" data-val="1l-plus" onclick="pick(this,'s5')">
-            <i class="ti ti-currency-rupee opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">₹1 Lakh+</span>
-            <span class="opt-desc">Enterprise / full platform</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n5" disabled onclick="next('s5','s6')">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 6: Timeline -->
-      <div class="step-view" id="s6">
-        <button class="btn-back" onclick="back('s6','s5')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 6 of 7 — Timeline</div>
-          <div class="step-title">When do you need it live?</div>
-          <div class="step-sub">We'll plan accordingly to meet your deadline</div>
-        </div>
-        <div class="options-grid">
-          <button class="opt-btn" data-val="asap" onclick="pick(this,'s6')">
-            <i class="ti ti-urgent opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">ASAP (1–2 weeks)</span>
-            <span class="opt-desc">Rush delivery, premium</span>
-          </button>
-          <button class="opt-btn" data-val="1month" onclick="pick(this,'s6')">
-            <i class="ti ti-calendar opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Within 1 month</span>
-            <span class="opt-desc">Standard delivery</span>
-            <span class="timeline-tag">Recommended</span>
-          </button>
-          <button class="opt-btn" data-val="3months" onclick="pick(this,'s6')">
-            <i class="ti ti-calendar-time opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">1–3 months</span>
-            <span class="opt-desc">Complex builds with revisions</span>
-          </button>
-          <button class="opt-btn" data-val="flexible" onclick="pick(this,'s6')">
-            <i class="ti ti-clock opt-icon" aria-hidden="true"></i>
-            <span class="opt-label">Flexible</span>
-            <span class="opt-desc">Quality over speed</span>
-          </button>
-        </div>
-        <button class="btn-next" id="n6" disabled onclick="next('s6','s7')">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-      </div>
-
-      <!-- STEP 7: Contact -->
-      <div class="step-view" id="s7">
-        <button class="btn-back" onclick="back('s7','s6')"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
-        <div class="step-header">
-          <div class="step-label">Step 7 of 7 — Your Details</div>
-          <div class="step-title">Where should we send your quote?</div>
-          <div class="step-sub">Your requirement summary will be included</div>
-        </div>
-        <div class="summary-box" id="summary-box"></div>
-        <div class="form-row">
-          <input type="text" class="form-input" id="fname" placeholder="Your name" />
-          <input type="text" class="form-input" id="fphone" placeholder="Phone / WhatsApp" />
-        </div>
-        <input type="email" class="form-input" id="femail" placeholder="Email address" />
-        <input type="text" class="form-input" id="fcompany" placeholder="Business name (optional)" />
-        <textarea class="form-input" id="fmsg" rows="3" placeholder="Anything else? (optional)" style="resize:none;"></textarea>
-        <button class="btn-next" onclick="submit()">
-          <i class="ti ti-send" aria-hidden="true"></i> Send My Requirements
-        </button>
-        <div class="trust-row">
-          <span class="trust-item"><i class="ti ti-lock" aria-hidden="true"></i> 100% confidential</span>
-          <span class="trust-item"><i class="ti ti-clock" aria-hidden="true"></i> Reply within 2 hours</span>
-          <span class="trust-item"><i class="ti ti-ban" aria-hidden="true"></i> Zero spam</span>
-        </div>
-      </div>
-
-      <!-- SUCCESS -->
-      <div class="step-view" id="s-success">
-        <div style="text-align:center; padding: 12px 0 8px;">
-          <div class="success-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
-          <div style="font-family:'Syne',sans-serif; font-size:22px; font-weight:700; color:#fff; margin-bottom:10px;">You're all set!</div>
-          <p style="font-size:14px; color:rgba(232,234,240,0.5); line-height:1.65; max-width:380px; margin:0 auto 24px;">Our team will review your requirements and reach out within 2 hours with a custom quote and next steps.</p>
-          <div style="background:rgba(32,196,141,0.08); border:0.5px solid rgba(32,196,141,0.2); border-radius:12px; padding:16px; text-align:left; margin-bottom:8px;">
-            <div style="font-size:12px; color:#20c48d; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;">What happens next</div>
-            <div style="font-size:13px; color:rgba(232,234,240,0.6); display:flex; flex-direction:column; gap:8px;">
-              <span>✦ Team reviews your project brief</span>
-              <span>✦ We send a detailed quote + timeline</span>
-              <span>✦ Free 30-min strategy call to kick off</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+  <div class="testi-grid">
+    <div class="tcard">
+      <div class="stars">★★★★★</div>
+      <div class="ttext">"Malachite built our Shopify store in 3 weeks. Clean UI, fast checkout, and they set up everything from payments to analytics."</div>
+      <div class="tname">Ritika S.</div>
+      <div class="trole">Founder, D2C Fashion Brand</div>
+    </div>
+    <div class="tcard">
+      <div class="stars">★★★★★</div>
+      <div class="ttext">"We needed a real estate portal with a CRM. They delivered on time, within budget, and the admin panel is super easy to manage."</div>
+      <div class="tname">Arvind M.</div>
+      <div class="trole">Director, PropConnect India</div>
+    </div>
+  </div>
+  <div class="next-sec">
+    <div class="next-title">What happens after you submit</div>
+    <div class="next-steps">
+      <div class="nstep"><div class="nnum">1</div><div class="nlabel">Team reviews your brief</div></div>
+      <div class="nstep"><div class="nnum">2</div><div class="nlabel">Custom quote sent in 2 hrs</div></div>
+      <div class="nstep"><div class="nnum">3</div><div class="nlabel">Free strategy call to kick off</div></div>
     </div>
   </div>
 </div>
+</div>
 
 <script>
-const steps = ['s1','s2','s3','s4','s5','s6','s7'];
-const answers = { s1:[], s2:[], s3:[], s4:[], s5:[], s6:[] };
-const progMap = { s1:14, s2:28, s3:42, s4:57, s5:71, s6:85, s7:100 };
+const OPTS = {
+  purpose:[
+    {v:'ecom',i:'ti-shopping-cart',l:'E-Commerce Store',d:'Sell products online'},
+    {v:'realestate',i:'ti-building-skyscraper',l:'Real Estate',d:'Property listings & leads'},
+    {v:'business',i:'ti-briefcase',l:'Business / Corporate',d:'Company presence & services'},
+    {v:'portfolio',i:'ti-palette',l:'Portfolio / Personal',d:'Showcase your work'},
+    {v:'saas',i:'ti-layout-dashboard',l:'SaaS / Web App',d:'Dashboard or platform'},
+    {v:'blog',i:'ti-article',l:'Blog / Content',d:'Publishing & media'},
+  ],
+  platform:{
+    ecom:[
+      {v:'shopify',i:'ti-brand-shopify',l:'Shopify',d:'Best for product stores',t:'Fastest launch'},
+      {v:'wordpress',i:'ti-brand-wordpress',l:'WordPress + WooCommerce',d:'SEO-friendly & flexible',t:'Most popular'},
+      {v:'wix',i:'ti-template',l:'Wix',d:'Visual drag-and-drop'},
+      {v:'custom',i:'ti-code',l:'Custom Code',d:'Built from scratch',t:'Most powerful'},
+    ],
+    realestate:[
+      {v:'wordpress',i:'ti-brand-wordpress',l:'WordPress',d:'Property plugins & MLS ready',t:'Recommended'},
+      {v:'webflow',i:'ti-layout',l:'Webflow',d:'Beautiful property sites'},
+      {v:'custom',i:'ti-code',l:'Custom Code',d:'Full CRM & portal features'},
+    ],
+    business:[
+      {v:'wordpress',i:'ti-brand-wordpress',l:'WordPress',d:'Easy to manage & update',t:'Most popular'},
+      {v:'webflow',i:'ti-layout',l:'Webflow',d:'Premium design quality'},
+      {v:'wix',i:'ti-template',l:'Wix',d:'Quick to launch'},
+      {v:'custom',i:'ti-code',l:'Custom Code',d:'Fully unique & branded'},
+    ],
+    portfolio:[
+      {v:'webflow',i:'ti-layout',l:'Webflow',d:'Stunning portfolio sites',t:'Recommended'},
+      {v:'wordpress',i:'ti-brand-wordpress',l:'WordPress',d:'Popular & plugin-rich'},
+      {v:'custom',i:'ti-code',l:'Custom Code',d:'Totally unique experience'},
+    ],
+    blog:[
+      {v:'wordpress',i:'ti-brand-wordpress',l:'WordPress',d:'#1 blogging CMS worldwide',t:'Best choice'},
+      {v:'webflow',i:'ti-layout',l:'Webflow CMS',d:'Modern publishing experience'},
+      {v:'custom',i:'ti-code',l:'Custom / Headless CMS',d:'Developer-grade content system'},
+    ],
+  },
+  tech:{
+    ecom:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'Fast, modern storefront',t:'Recommended'},
+      {v:'node',i:'ti-server',l:'Node.js Backend',d:'Custom APIs & inventory logic'},
+      {v:'fullstack',i:'ti-stack',l:'Full Stack',d:'Complete front + back end'},
+    ],
+    realestate:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'Dynamic property listing pages',t:'Recommended'},
+      {v:'html',i:'ti-brand-html5',l:'HTML / CSS / JS',d:'Lightweight & fast sites'},
+      {v:'node',i:'ti-server',l:'Node.js Backend',d:'API & database layer'},
+    ],
+    business:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'Modern company website'},
+      {v:'html',i:'ti-brand-html5',l:'HTML / CSS / JS',d:'Clean, fast pages'},
+      {v:'node',i:'ti-server',l:'Node.js Backend',d:'Forms, CRM & automation'},
+      {v:'fullstack',i:'ti-stack',l:'Full Stack',d:'Complete end-to-end solution'},
+    ],
+    portfolio:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'Interactive portfolio',t:'Recommended'},
+      {v:'html',i:'ti-brand-html5',l:'HTML / CSS / JS',d:'Lightweight & fast'},
+    ],
+    saas:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'SaaS frontend & dashboard',t:'Recommended'},
+      {v:'node',i:'ti-server',l:'Node.js Backend',d:'APIs, auth & data systems'},
+      {v:'python',i:'ti-brand-python',l:'Python / Django',d:'AI & data-heavy features'},
+      {v:'fullstack',i:'ti-stack',l:'Full Stack',d:'Complete platform build'},
+      {v:'rn',i:'ti-device-mobile',l:'React Native',d:'Mobile app included'},
+    ],
+    blog:[
+      {v:'react',i:'ti-brand-react',l:'React / Next.js',d:'Headless CMS frontend',t:'Recommended'},
+      {v:'html',i:'ti-brand-html5',l:'HTML / CSS / JS',d:'Fast static blog'},
+    ],
+  },
+  features:{
+    ecom:[
+      {v:'pay',i:'ti-credit-card',l:'Payment Gateway',d:'Razorpay, Stripe, PayPal'},
+      {v:'admin',i:'ti-settings',l:'Product Admin Panel',d:'Manage stock & orders'},
+      {v:'seo',i:'ti-search',l:'SEO Setup',d:'Rank on Google'},
+      {v:'bot',i:'ti-robot',l:'AI Chatbot',d:'24/7 shopping assistant'},
+      {v:'lang',i:'ti-language',l:'Multi-Language',d:'Hindi, English + more'},
+      {v:'analytics',i:'ti-chart-bar',l:'Analytics',d:'Track sales & visitors'},
+    ],
+    realestate:[
+      {v:'crm',i:'ti-users',l:'Lead / CRM System',d:'Capture & manage buyers'},
+      {v:'seo',i:'ti-search',l:'SEO Setup',d:'Rank for property searches'},
+      {v:'bot',i:'ti-robot',l:'AI Chatbot',d:'Qualify leads automatically'},
+      {v:'admin',i:'ti-settings',l:'Listing Admin Panel',d:'Add & manage property listings'},
+      {v:'maps',i:'ti-map-pin',l:'Maps Integration',d:'Google Maps on listings'},
+      {v:'analytics',i:'ti-chart-bar',l:'Analytics',d:'Track enquiries & views'},
+    ],
+    business:[
+      {v:'seo',i:'ti-search',l:'SEO Setup',d:'Rank on Google'},
+      {v:'crm',i:'ti-users',l:'CRM / Lead Forms',d:'Capture & manage enquiries'},
+      {v:'bot',i:'ti-robot',l:'AI Chatbot',d:'Answer queries 24/7'},
+      {v:'analytics',i:'ti-chart-bar',l:'Analytics',d:'Visitor & conversion data'},
+      {v:'admin',i:'ti-settings',l:'CMS / Admin Panel',d:'Edit your content yourself'},
+      {v:'blog',i:'ti-pencil',l:'Blog Section',d:'Content marketing'},
+    ],
+    portfolio:[
+      {v:'seo',i:'ti-search',l:'SEO Optimisation',d:'Get discovered on Google'},
+      {v:'blog',i:'ti-pencil',l:'Blog / Articles',d:'Share work & thoughts'},
+      {v:'analytics',i:'ti-chart-bar',l:'Analytics',d:'See who views your portfolio'},
+      {v:'contact',i:'ti-mail',l:'Booking / Contact Form',d:'Let clients reach you'},
+    ],
+    saas:[
+      {v:'admin',i:'ti-settings',l:'Admin Dashboard',d:'User & data management'},
+      {v:'pay',i:'ti-credit-card',l:'Subscription Billing',d:'Stripe / Razorpay recurring'},
+      {v:'analytics',i:'ti-chart-bar',l:'Usage Analytics',d:'Revenue & retention tracking'},
+      {v:'bot',i:'ti-robot',l:'AI Support Bot',d:'In-app help assistant'},
+      {v:'crm',i:'ti-users',l:'User CRM',d:'Manage accounts & plans'},
+      {v:'lang',i:'ti-language',l:'Multi-Language',d:'Global user base'},
+    ],
+    blog:[
+      {v:'seo',i:'ti-search',l:'SEO Setup',d:'Rank for your keywords'},
+      {v:'nl',i:'ti-mail',l:'Newsletter Signup',d:'Mailchimp, ConvertKit'},
+      {v:'analytics',i:'ti-chart-bar',l:'Analytics',d:'Track readers & growth'},
+      {v:'bot',i:'ti-robot',l:'AI Chatbot',d:'Engage readers'},
+    ],
+  },
+  budget:[
+    {v:'u15',i:'ti-currency-rupee',l:'₹15,000',d:'Template / basic landing page'},
+    {v:'15-40',i:'ti-currency-rupee',l:'₹15,000 – ₹40,000',d:'Professional website',t:'Most popular'},
+    {v:'40-1l',i:'ti-currency-rupee',l:'₹40,000 – ₹1 Lakh',d:'Feature-rich web app'},
+    {v:'1l+',i:'ti-currency-rupee',l:'₹1 Lakh+',d:'Enterprise / full platform'},
+  ],
+  timeline:[
+    {v:'asap',i:'ti-urgent',l:'ASAP (1–2 weeks)',d:'Rush delivery, premium rate'},
+    {v:'1mo',i:'ti-calendar',l:'Within 1 month',d:'Standard timeline',t:'Recommended'},
+    {v:'3mo',i:'ti-calendar-time',l:'1–3 months',d:'Complex builds with revisions'},
+    {v:'flex',i:'ti-clock',l:'Flexible',d:'Quality over speed'},
+  ],
+};
 
-function setProgress(step) {
-  document.getElementById('prog').style.width = (progMap[step] || 100) + '%';
+const FLOW = ['purpose','platform','tech','features','budget','timeline','contact'];
+const STEP_LABELS = {
+  purpose:{n:'What do you need?',multi:false},
+  platform:{n:'Which platform?',multi:false},
+  tech:{n:'Tech stack',multi:true},
+  features:{n:'Key features',multi:true},
+  budget:{n:'Your budget',multi:false},
+  timeline:{n:'Timeline',multi:false},
+  contact:{n:'Your details',multi:false},
+};
+
+let ans = {};
+let history = [];
+let cur = 'purpose';
+
+function getFlow() {
+  const p = ans.purpose && ans.purpose[0];
+  const pl = ans.platform && ans.platform[0];
+  let f = ['purpose'];
+  if (p === 'saas') { f.push('tech'); }
+  else { f.push('platform'); if (pl === 'custom') f.push('tech'); }
+  f.push('features','budget','timeline','contact');
+  return f;
 }
 
-function showStep(id) {
-  document.querySelectorAll('.step-view').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) { el.classList.add('active'); setProgress(id); }
+function prog() {
+  const f = getFlow();
+  const idx = f.indexOf(cur);
+  const pct = Math.round(((idx+1)/f.length)*100);
+  document.getElementById('prog').style.width = pct + '%';
 }
 
-function pick(btn, step) {
-  btn.closest('.options-grid, .budget-opts').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  answers[step] = [btn.dataset.val];
-  const nb = document.getElementById('n' + step.replace('s',''));
-  if (nb) nb.disabled = false;
+function getOpts(step) {
+  const p = ans.purpose && ans.purpose[0];
+  if (step === 'purpose') return OPTS.purpose;
+  if (step === 'platform') return OPTS.platform[p] || [];
+  if (step === 'tech') return OPTS.tech[p] || [];
+  if (step === 'features') return OPTS.features[p] || [];
+  if (step === 'budget') return OPTS.budget;
+  if (step === 'timeline') return OPTS.timeline;
+  return [];
 }
 
-function toggle(btn, step) {
-  btn.classList.toggle('selected');
-  answers[step] = [...btn.closest('.options-grid, .budget-opts').querySelectorAll('.opt-btn.selected')].map(b => b.dataset.val);
-  const nb = document.getElementById('n' + step.replace('s',''));
-  if (nb) nb.disabled = answers[step].length === 0;
+function stepNum() {
+  const f = getFlow();
+  return f.indexOf(cur)+1 + ' of ' + f.length;
 }
 
-function next(from, to) {
-  showStep(to);
-}
-
-function back(from, to) {
-  answers[from] = [];
-  document.querySelectorAll('#'+from+' .opt-btn').forEach(b => b.classList.remove('selected'));
-  const nb = document.getElementById('n' + from.replace('s',''));
-  if (nb) nb.disabled = true;
-  showStep(to);
-}
-
-function goPlatformNext() {
-  const v = answers.s2[0];
-  if (v === 'custom') { showStep('s3'); } else { showStep('s4'); }
-}
-
-function backFeatures() {
-  const v = answers.s2[0];
-  if (v === 'custom') { back('s4','s3'); } else { back('s4','s2'); }
-}
-
-function getLabelFor(step, val) {
-  const el = document.querySelector('#'+step+' [data-val="'+val+'"] .opt-label');
-  return el ? el.textContent : val;
-}
-
-function buildSummary() {
-  const box = document.getElementById('summary-box');
-  let rows = '';
-  const fields = [
-    { step:'s1', label:'Purpose' },
-    { step:'s2', label:'Platform' },
-    { step:'s3', label:'Tech stack' },
-    { step:'s4', label:'Features' },
-    { step:'s5', label:'Budget' },
-    { step:'s6', label:'Timeline' },
-  ];
-  fields.forEach(f => {
-    if (!answers[f.step] || !answers[f.step].length) return;
-    const vals = answers[f.step].map(v => getLabelFor(f.step, v)).join(', ');
-    rows += '<div class="summary-row"><strong>'+f.label+'</strong><span>'+vals+'</span></div>';
+function render() {
+  prog();
+  if (cur === 'contact') { renderContact(); return; }
+  if (cur === 'success') { renderSuccess(); return; }
+  const multi = STEP_LABELS[cur].multi;
+  const opts = getOpts(cur);
+  const sel = ans[cur] || [];
+  const cols = opts.length <= 3 ? 'c3' : '';
+  let html = '';
+  if (history.length) html += `<button class="btn-back" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>`;
+  html += `<div class="sh">
+    <div class="slabel">Step ${stepNum()}</div>
+    <div class="stitle">${STEP_LABELS[cur].n}</div>
+    <div class="ssub">${multi ? '<span class="multi-badge"><i class="ti ti-checks" aria-hidden="true"></i> Select all that apply</span>' : '<span>Choose one</span>'}</div>
+  </div>`;
+  html += `<div class="grid ${cols}">`;
+  opts.forEach(o => {
+    const s = sel.includes(o.v) ? ' sel' : '';
+    html += `<button class="opt${s}" onclick="pick('${o.v}')">
+      ${multi ? '<div class="check"></div>' : ''}
+      <i class="ti ${o.i} oi" aria-hidden="true"></i>
+      <span class="ol">${o.l}</span>
+      <span class="od">${o.d}</span>
+      ${o.t ? `<span class="otag">${o.t}</span>` : ''}
+    </button>`;
   });
-  box.innerHTML = rows;
+  html += '</div>';
+  const disabled = sel.length === 0 ? ' disabled' : '';
+  html += `<button class="btn-next"${disabled} id="nb" onclick="goNext()">Continue <i class="ti ti-arrow-right" aria-hidden="true"></i></button>`;
+  if (multi) html += `<div class="skip-link"><button onclick="skip()">Skip this step →</button></div>`;
+  document.getElementById('card').innerHTML = html;
+  document.getElementById('below').style.display = 'block';
 }
 
-document.getElementById('s7').addEventListener('click', function(){}, {once:false});
-
-const orig = showStep;
-window.addEventListener('load', function() {});
-
-function showStep(id) {
-  document.querySelectorAll('.step-view').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) { el.classList.add('active'); setProgress(id); }
-  if (id === 's7') buildSummary();
-}
-
-function next(from, to) { showStep(to); }
-
-function submit() {
-  const name = document.getElementById('fname').value.trim();
-  const phone = document.getElementById('fphone').value.trim();
-  const email = document.getElementById('femail').value.trim();
-  if (!name || !phone) {
-    alert('Please enter your name and phone number.');
-    return;
+function pick(v) {
+  const multi = STEP_LABELS[cur].multi;
+  if (multi) {
+    if (!ans[cur]) ans[cur] = [];
+    const idx = ans[cur].indexOf(v);
+    if (idx > -1) ans[cur].splice(idx,1); else ans[cur].push(v);
+  } else {
+    ans[cur] = [v];
   }
-  showStep('s-success');
+  render();
 }
+
+function goNext() {
+  const f = getFlow();
+  const idx = f.indexOf(cur);
+  if (idx < f.length-1) {
+    history.push(cur);
+    cur = f[idx+1];
+    render();
+  }
+}
+
+function skip() {
+  ans[cur] = [];
+  goNext();
+}
+
+function goBack() {
+  if (!history.length) return;
+  cur = history.pop();
+  render();
+}
+
+function getLbl(step, v) {
+  const opts = getOpts(step);
+  const o = opts.find(x => x.v === v);
+  return o ? o.l : v;
+}
+
+function renderContact() {
+  let sumRows = '';
+  const showSteps = ['purpose','platform','tech','features','budget','timeline'];
+  showSteps.forEach(s => {
+    if (!ans[s] || !ans[s].length) return;
+    const vals = ans[s].map(v => getLbl(s,v)).join(', ');
+    sumRows += `<div class="sum-row"><strong>${STEP_LABELS[s].n}</strong><span>${vals}</span></div>`;
+  });
+  document.getElementById('card').innerHTML = `
+    <button class="btn-back" onclick="goBack()"><i class="ti ti-arrow-left" aria-hidden="true"></i> Back</button>
+    <div class="sh">
+      <div class="slabel">Step ${stepNum()}</div>
+      <div class="stitle">Almost there — who should we contact?</div>
+      <div class="ssub"><span>Your brief is ready. Fill in your details to receive it.</span></div>
+    </div>
+    <div class="sum-box">${sumRows}</div>
+    <div class="irow"><input class="inp" id="fn" placeholder="Your name" /><input class="inp" id="fp" placeholder="Phone / WhatsApp" /></div>
+    <input class="inp" id="fe" placeholder="Email address" type="email" />
+    <input class="inp" id="fc" placeholder="Business name (optional)" />
+    <div class="cta-wrap">
+      <div class="cta-title">Your free quote is one click away</div>
+      <div class="cta-sub">No commitment. No spam. Our team personally reviews every brief.</div>
+      <button class="btn-submit" onclick="submit()">
+        <i class="ti ti-send" aria-hidden="true"></i>
+        Claim My Free Consultation
+      </button>
+    </div>
+    <div class="micro-trust">
+      <span class="mt-item"><i class="ti ti-lock" aria-hidden="true"></i> 100% confidential</span>
+      <span class="mt-item"><i class="ti ti-clock" aria-hidden="true"></i> Reply in 2 hours</span>
+      <span class="mt-item"><i class="ti ti-ban" aria-hidden="true"></i> Zero spam</span>
+      <span class="mt-item"><i class="ti ti-phone-call" aria-hidden="true"></i> No pushy sales calls</span>
+    </div>`;
+}
+
+// ── REPLACE THIS with your deployed Google Apps Script URL ──────
+// After deploying (see setup guide), paste your /exec URL here
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxkqbiPZX0wlMCeLsy279ySxV8bdfsOhi0See7ZpYx5ZoRQb5c2OoWDiznHvsqYjtIlfg/exec';
+// ────────────────────────────────────────────────────────────────
+
+async function submit() {
+  const n = document.getElementById('fn').value.trim();
+  const p = document.getElementById('fp').value.trim();
+  const e = document.getElementById('fe').value.trim();
+  const c = document.getElementById('fc').value.trim();
+  if (!n || !p) { alert('Please enter your name and phone number.'); return; }
+
+  const payload = { ...ans, name: n, phone: p, email: e, company: c };
+
+  // Save to sessionStorage for thank-you page display
+  try {
+    sessionStorage.setItem('malachite_lead', JSON.stringify(payload));
+    sessionStorage.removeItem('malachite_timer_end');
+  } catch(err) {}
+
+  // Show loading state on button
+  const btn = document.querySelector('.btn-submit');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> Sending...'; }
+
+  // Send to Google Sheets + WhatsApp (non-blocking — redirect even if it fails)
+  try {
+    if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEBHOOK_URL') {
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors'   // Google Apps Script requires no-cors
+      });
+    }
+  } catch(err) {
+    // Silently fail — don't block the user experience
+    console.warn('Webhook error:', err);
+  }
+
+  // Redirect to thank-you page
+  window.location.href = 'thankyou.html';
+}
+
+function renderSuccess() {
+  document.getElementById('prog').style.width = '100%';
+  document.getElementById('card').innerHTML = `
+    <div style="text-align:center;padding:10px 0 6px">
+      <div class="suc-icon"><i class="ti ti-check" aria-hidden="true"></i></div>
+      <div style="font-family:Syne,sans-serif;font-size:21px;font-weight:800;color:#fff;margin-bottom:10px">You're all set!</div>
+      <p style="font-size:13px;color:rgba(221,226,238,.45);line-height:1.7;max-width:340px;margin:0 auto 22px">Our team will review your project brief and reach out within 2 hours with a custom quote and next steps.</p>
+      <div style="background:rgba(32,196,141,.07);border:0.5px solid rgba(32,196,141,.18);border-radius:12px;padding:16px;text-align:left">
+        <div style="font-size:10px;color:#20c48d;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">What happens next</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(221,226,238,.55)"><span style="color:#20c48d;font-weight:700;min-width:18px">1.</span>Our team personally reviews your project brief</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(221,226,238,.55)"><span style="color:#20c48d;font-weight:700;min-width:18px">2.</span>You receive a detailed quote + timeline via WhatsApp/email</div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(221,226,238,.55)"><span style="color:#20c48d;font-weight:700;min-width:18px">3.</span>Free 30-min strategy call to align on goals & scope</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+render();
 </script>
